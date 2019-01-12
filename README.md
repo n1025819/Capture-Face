@@ -13,11 +13,11 @@
     
 ## Programe
 #### Run on RaspberryPi(Picam is needed)
-    test_img.py (辨識出任意照片上有無人臉)
-    test_video.py (即時影像串流)
-    test_captureFace.py (即時影像串流並標示出人臉)
+    test_img.py (Recognize if there is any face on the photo)
+    test_video.py (Real time vedio)
+    test_captureFace.py (Merge the two programes abive)
 
 #### Run on computer
-    test_img.py (這個也可以在電腦執行)
-    FaceModeling_v1.py (切照片>篩照片>建模)
-    ConfusionMatrixAccuracy.py (混淆矩陣算模型正確率)
+    test_img.py (This can be run on computer)
+    FaceModeling_v1.py (Cut the photoes -> Filter abnormal photoes -> Modeling)
+    ConfusionMatrixAccuracy.py (Confusion matrix Accuracy)
