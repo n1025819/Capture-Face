@@ -11,6 +11,7 @@ import os
 import numpy as np
 from PIL import Image
 import time
+import shutil
 
 ## Cut photoes and save into /dataset/
 if not os.path.isdir('./dataset'):
@@ -64,13 +65,17 @@ time.sleep(3)
 
 ## Filter the photo -> remove improper photoes
 datasetPath = r'./dataset'
+abnormalPath = r'./abnotmalPhotoes'
+
+if not os.path.isdir(abnormalPath):
+    os.mkdir(abnormalPath)
 
 for i in os.listdir(datasetPath):
     print(i)
     size = os.path.getsize(datasetPath + '/' + i)
-    print(size)
-    if size < 110000:
-        os.remove(datasetPath + '/' + i)
+    print(size, 'KB')
+    if size < 100000:
+        shutil.move(datasetPath + '/' + i , abnormalPath)
         print('Deleted!')
 
 n = len(os.listdir('./Face'))
@@ -78,19 +83,26 @@ print('[INFO] Abnormal photoes has been removed.')
 print('[INFO] Second time checking...')
 
 for i in range(1, n + 1):
-    sizeUser = 0
-    countUser = 0
+    sizeUser = 1
+    countUser = 1
     for j in os.listdir(datasetPath):
-        sizeUser += int(os.path.getsize(datasetPath + '/' + j))
-        countUser += 1
+        if int(str(j).split('.')[1]) == i:
+            sizeUser += int(os.path.getsize(datasetPath + '/' + j))
+            countUser += 1
+    print('\n\n')
     avgSizeOfUser_i = sizeUser/countUser
+    print('[INFO] Average volumn of User.%s is'%i, avgSizeOfUser_i)
+    print('[INFO] Those photoes which volumn is less than %s KB will be moved to %s.'%(avgSizeOfUser_i*0.6, abnormalPath))
+    print('\n\n')
+    time.sleep(3)
     for j in os.listdir(datasetPath):
-        print(j)
-        size = os.path.getsize(datasetPath + '/' + j)
-        print(size)
-        if size < avgSizeOfUser_i*3/5:
-            os.remove(datasetPath + '/' + j)
-            print('Deleted!')
+        if int(str(j).split('.')[1]) == i:
+            print(j)
+            size = os.path.getsize(datasetPath + '/' + j)
+            print(size, 'KB')
+            if size < avgSizeOfUser_i*0.6:
+                shutil.move(datasetPath + '/' + i, abnormalPath)
+                print('Deleted!')
 
 print('[INFO] Improper photoes removed.')
 print('[INFO] Please check if there still exist improper photoes in your directory manually.')
