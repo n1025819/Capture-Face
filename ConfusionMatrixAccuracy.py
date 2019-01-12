@@ -24,8 +24,8 @@ all = 0
 checkId = 0
 
 # names related to ids: example ==> JieCheng-Pan: id=1,  etc
-names = ['None', 'JieCheng-Pan', 'MinQi-Qiu', 'ShengZhi-Qiu', 'ChengYou-Shi', 'YoHeng-Guo', 'YoQing-Chen', 'LvAn-Lin',
-         'JunLong-chen', 'YuZHe-Qiu', 'YiYing-Chen']
+names = ['None', 'JieCheng-Pan', 'YiYing-Chen', 'MinQi-Qiu', 'ShengZhi-Qiu', 'ChengYou-Shi', 'YoHeng-Guo', 'YoQing-Chen', 'LvAn-Lin',
+         'JunLong-chen', 'YuZHe-Qiu']
 
 testerPath = r'./tester'
 for user in os.listdir(testerPath):
@@ -44,17 +44,19 @@ for user in os.listdir(testerPath):
         faces = face_cascade.detectMultiScale(gray,
                                               scaleFactor = 1.2,
                                               minNeighbors = 5,
-                                              minSize = (5,5))
+                                              minSize = (7,7))
 
         print("There are %s faces on the photo!"%(str(len(faces))))
+        if int(len(faces)) > 1 or int(len(faces)) == 0:
+            continue
 
         for(x,y,w,h) in faces:
-            cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
+            cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 5)
             id, confidence = recognizer.predict(gray[y:y + h, x:x + w])
+            checkId = id
 
             # Check if confidence is less them 100 ==> "0" is perfect match
             if (confidence < 100):
-                checkId = id
                 id = names[id]
                 confidence = "  %s" % (round(100 - confidence))
             else:
@@ -71,7 +73,7 @@ for user in os.listdir(testerPath):
             except:
                 print('stop!')
 
-        imgCount += 1
+            imgCount += 1
 
         print('id=',id)
         print('confidence=',confidence)

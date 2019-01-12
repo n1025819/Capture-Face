@@ -45,6 +45,10 @@ for user in range(userId - 1, len(dtUserDir)):
 
         print("[INFO] There are %s faces on the photo!" % (str(len(faces))))
 
+        # The photo will not be modeled unless the photo has only one face in it
+        if len(faces) != 1:
+            continue
+
         for (x, y, w, h) in faces:
             # cv2.circle(image,((x+x+w)/2,(y+y+h)/2),w/2,(0,255,0),2)
             cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
@@ -55,7 +59,7 @@ for user in range(userId - 1, len(dtUserDir)):
     userId += 1
 
 print('[INFO] Face photoes cut!')
-print('[INFO] Removint improper photoes.')
+print('[INFO] Removing improper photoes.')
 time.sleep(3)
 
 ## Filter the photo -> remove improper photoes
@@ -65,14 +69,33 @@ for i in os.listdir(datasetPath):
     print(i)
     size = os.path.getsize(datasetPath + '/' + i)
     print(size)
-    if size < 100000:
+    if size < 110000:
         os.remove(datasetPath + '/' + i)
         print('Deleted!')
 
+n = len(os.listdir('./Face'))
+print('[INFO] Abnormal photoes has been removed.')
+print('[INFO] Second time checking...')
+
+for i in range(1, n + 1):
+    sizeUser = 0
+    countUser = 0
+    for j in os.listdir(datasetPath):
+        sizeUser += int(os.path.getsize(datasetPath + '/' + j))
+        countUser += 1
+    avgSizeOfUser_i = sizeUser/countUser
+    for j in os.listdir(datasetPath):
+        print(j)
+        size = os.path.getsize(datasetPath + '/' + j)
+        print(size)
+        if size < avgSizeOfUser_i*3/5:
+            os.remove(datasetPath + '/' + j)
+            print('Deleted!')
+
 print('[INFO] Improper photoes removed.')
 print('[INFO] Please check if there still exist improper photoes in your directory manually.')
-print('[INFO] Model training will start 5 min later.')
-time.sleep(300)
+print('[INFO] Model training will start 10 min later.')
+time.sleep(600)
 
 ## Training
 # Path for face image database
