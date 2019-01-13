@@ -92,7 +92,7 @@ for i in range(1, n + 1):
     print('\n\n')
     avgSizeOfUser_i = sizeUser/countUser
     print('[INFO] Average volumn of User.%s is'%i, avgSizeOfUser_i)
-    print('[INFO] Those photoes which volumn is less than %s KB will be moved to %s.'%(avgSizeOfUser_i*0.6, abnormalPath))
+    print('[INFO] Those photoes which volumn is less than %s KB will be moved to %s.'%(avgSizeOfUser_i*0.7, abnormalPath))
     print('\n\n')
     time.sleep(3)
     for j in os.listdir(datasetPath):
@@ -100,13 +100,13 @@ for i in range(1, n + 1):
             print(j)
             size = os.path.getsize(datasetPath + '/' + j)
             print(size, 'KB')
-            if size < avgSizeOfUser_i*0.6:
-                shutil.move(datasetPath + '/' + i, abnormalPath)
+            if size < avgSizeOfUser_i*0.7:
+                shutil.move(datasetPath + '/' + j, abnormalPath)
                 print('Deleted!')
 
-print('[INFO] Improper photoes removed.')
+print('\n[INFO] Improper photoes removed.')
 print('[INFO] Please check if there still exist improper photoes in your directory manually.')
-print('[INFO] Model training will start 10 min later.')
+print('[INFO] Model training will start 10 min later.\n')
 time.sleep(600)
 
 ## Training
@@ -144,6 +144,7 @@ recognizer.train(faces, np.array(ids))
 print('[INFO] Modling all data...')
 # Save the model into trainer/trainer.yml
 os.mkdir('./trainer')
+print('[INFO] Saving model...')
 recognizer.write('trainer/trainer.yml') # recognizer.save() worked on Mac, but not on Pi
 
 # Print the numer of faces trained and end program
