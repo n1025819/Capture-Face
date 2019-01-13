@@ -140,8 +140,8 @@ def getImagesAndLabels(path):
 
 print ("\n [INFO] Training faces. It will take a few seconds. Wait ...")
 faces,ids = getImagesAndLabels(path)
-recognizer.train(faces, np.array(ids))
 print('[INFO] Modling all data...')
+recognizer.train(faces, np.array(ids))
 # Save the model into trainer/trainer.yml
 os.mkdir('./trainer')
 print('[INFO] Saving model...')
