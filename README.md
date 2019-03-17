@@ -1,10 +1,10 @@
 # Face Recognition
 ## Demo vedio
 #### One person is in model and the other is not
-Click to watch the vedio
+Click photo below to watch demo vedio
 [![Demo1](https://github.com/uuboyscy/Capture-Face/blob/master/sample1.png)](https://youtu.be/4p_tiyDbDA0 "Demo1")
 #### Successfully recognize two persons who are in model
-Click to watch the vedio
+Click photo below to watch demo vedio
 [![Demo2](https://github.com/uuboyscy/Capture-Face/blob/master/sample2.png)](https://youtu.be/9oSXastzVhI "Demo2")
 
 ## What you need
